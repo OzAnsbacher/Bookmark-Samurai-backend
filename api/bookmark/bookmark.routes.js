@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.post('/', addbookmark)
 router.get('/', getbookmarks)
-router.get('/:id', getbookmarkById)
+router.get('/:id', requireAuth, getbookmarkById)
 router.delete('/:id', removebookmark)//requireAuth, requireAdmin,
 router.put('/:id', updatebookmark)
 // router.delete('/:id', removebookmark)

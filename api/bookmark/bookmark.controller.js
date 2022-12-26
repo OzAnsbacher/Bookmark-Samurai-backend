@@ -1,13 +1,12 @@
 const bookmarkService = require("./bookmark.service.js")
+const userService = require("../user/user.service")
 const logger = require("../../services/logger.service")
 const { broadcast } = require("../../services/socket.service.js")
 
 async function getbookmarks(req, res) {
-  console.log("brefore try")
   try {
     const queryParams = req.query
     const bookmarks = await bookmarkService.query(queryParams)
-    console.log("after try")
     res.json(bookmarks)
   } catch (err) {
     res.status(404).send(err)
@@ -17,7 +16,7 @@ async function getbookmarks(req, res) {
 async function getbookmarkById(req, res) {
   try {
     const bookmarkId = req.params.id
-    const bookmark = await bookmarkService.getById(bookmarkId)
+    const bookmark = await userService.getById(bookmarkId)
     res.json(bookmark)
   } catch (err) {
     res.status(404).send(err)
@@ -28,7 +27,7 @@ async function addbookmark(req, res) {
   const bookmark = req.body
   try {
     const addedbookmark = await bookmarkService.add(bookmark)
-    broadcast({ type: "something-changed", userId: req.session?.user._id })
+    // broadcast({ type: "something-changed", userId: req.session?.user._id })
     res.json(addedbookmark)
   } catch (err) {
     res.status(500).send(err)
