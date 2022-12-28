@@ -3,7 +3,7 @@ const userService = require("../user/user.service")
 const logger = require("../../services/logger.service")
 // const { broadcast } = require("../../services/socket.service.js")
 
-async function getbookmarks(req, res) {
+async function getBookmarks(req, res) {
   try {
     const queryParams = req.query
     const bookmarks = await bookmarkService.query(queryParams)
@@ -13,19 +13,18 @@ async function getbookmarks(req, res) {
   }
 }
 
-async function removebookmark(req, res) {
+async function removeBookmark(req, res) {
   try {
     const bookmarkId = req.params.id
-    console.log(bookmarkId);
     const removedId = await bookmarkService.remove(bookmarkId)
-    res.send(removedId)
+    console.log(removedId)
+    res.send({id:removedId})
   } catch (err) {
     res.status(500).send(err)
   }
 }
 
-
 module.exports = {
-  getbookmarks,
-  removebookmark,
+  getBookmarks,
+  removeBookmark,
 }

@@ -4,7 +4,7 @@ const logger = require("../../services/logger.service")
 
 async function login(username, password) {
   logger.debug(`auth.service - login with username: ${username}`)
-  const user = await userService.getByUsername(username)
+  const user = await userService.getByUsername(username, password)
   if (!user) return Promise.reject("Invalid username or password")
   delete user.password
   return user
